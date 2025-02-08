@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: peer0-org1-example-com
+  namespace: blockchain
+spec:
+  ports:
+  - port: 7051
+    targetPort: 7051
+    name: peer
+  selector:
+    app: fabric-peer
