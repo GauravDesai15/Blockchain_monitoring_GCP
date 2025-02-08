@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orderer
+  namespace: fabric
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: orderer
+  template:
+    metadata:
+      labels:
+        app: orderer
+    spec:
+      containers:
+      - name: orderer
+        image: hyperledger/fabric-orderer:latest
+        ports:
+        - containerPort: 7050
+
+General:
+  GenesisFile: /etc/hyperledger/fabric/genesisblock
+---
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: orderer
+  namespace: fabric
+spec:
+  ports:
+  - port: 7050
+    targetPort: 7050
+  selector:
+    app: orderer
+
+
+metrics:
+  provider: prometheus
