@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fabric-orderer
+  namespace: blockchain
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fabric-orderer
+  template:
+    metadata:
+      labels:
+        app: fabric-orderer
+    spec:
+      containers:
+      - name: fabric-orderer
+        image: hyperledger/fabric-orderer:2.4
+        env:
+        - name: ORDERER_GENERAL_LOGLEVEL
+          value: info
+        - name: ORDERER_GENERAL_LISTENADDRESS
+          value: 0.0.0.0
+        - name: ORDERER_GENERAL_LISTENPORT
+          value: "7050"
+        ports:
+        - containerPort: 7050
