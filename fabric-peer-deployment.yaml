@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fabric-peer
+  namespace: blockchain
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fabric-peer
+  template:
+    metadata:
+      labels:
+        app: fabric-peer
+    spec:
+      containers:
+      - name: fabric-peer
+        image: hyperledger/fabric-peer:2.4
+        env:
+        - name: CORE_PEER_ID
+          value: peer0.org1.example.com
+        - name: CORE_PEER_ADDRESS
+          value: fabric-peer.blockchain.svc.cluster.local:7051
+        - name: CORE_PEER_LISTENADDRESS
+          value: 0.0.0.0:7051
+        - name: CORE_PEER_CHAINCODEADDRESS
+          value: fabric-peer.blockchain.svc.cluster.local:7052
+        ports:
+        - containerPort: 7051
+        - containerPort: 7053
